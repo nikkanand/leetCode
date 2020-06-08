@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int change(int amount, vector<int>& coins) {
+        int n=coins.size();
+        int tb[amount+1];
+        memset(tb,0,sizeof(tb));
+        tb[0]=1;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=coins[i];j<=amount;j++)
+                tb[j]+=tb[j-coins[i]];
+        }
+        return tb[amount];
+    }
+};
