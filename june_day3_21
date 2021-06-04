@@ -1,0 +1,23 @@
+// Maximum Area of a Piece of Cake After Horizontal and Vertical Cuts
+
+class Solution {
+public:
+    int maxArea(int h, int w, vector<int>& horizontalCuts, vector<int>& verticalCuts) {
+        sort(horizontalCuts.begin(),horizontalCuts.end());
+        sort(verticalCuts.begin(),verticalCuts.end());
+        int lh=horizontalCuts.size();
+        int lv=verticalCuts.size();
+        
+        int maxh=horizontalCuts[0];
+        for(int i=1;i<lh;i++)
+            maxh=max(maxh,horizontalCuts[i]-horizontalCuts[i-1]);
+        maxh=max(maxh,h-horizontalCuts.back());
+        
+        int maxv=verticalCuts[0];
+        for(int i=1;i<lv;i++)
+            maxv=max(maxv,verticalCuts[i]-verticalCuts[i-1]);
+        maxv=max(maxv,w-verticalCuts.back());
+        
+        return ((long)maxh*(long)maxv)%1000000007;
+    }
+};
