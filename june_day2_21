@@ -1,0 +1,50 @@
+// Interliving String
+
+class Solution {
+public:
+    bool isInterleave(string s1, string s2, string s3) {
+ 
+        if (s1.size() == 0)
+            return s3 == s2;
+ 
+        if (s2.size() == 0)
+            return s3 == s1;
+ 
+        vector<vector<int> > vvi;
+        for (int i=0;i<s1.size()+1;i++) {
+            vector<int> vi(s2.size()+1, -1);
+            vvi.push_back(vi);
+        }
+        return helper(s1, s2, s3, 0, 0, vvi);
+    }
+ 
+    bool helper(string &s1, string &s2, string &s3, int i1, int i2, vector<vector<int> > &vvi) {
+        int i3 = i1+i2;
+ 
+        if (i3 == s3.size() && i1 == s1.size() && i2 == s2.size())
+            return true;
+ 
+        if (i3 == s3.size())
+            return false;
+ 
+        if (vvi[i1][i2] != -1)
+            return vvi[i1][i2];
+ 
+        if (s3[i3] == s1[i1]) {
+            if (helper(s1,s2,s3,i1+1,i2, vvi)) {
+                vvi[i1][i2] = 1;
+                return true;
+            }
+        }
+ 
+        if (s3[i3] == s2[i2]) {
+            if (helper(s1,s2,s3,i1,i2+1, vvi)) {
+                vvi[i1][i2] = 1;
+                return true;
+            }
+        }
+ 
+        vvi[i1][i2] = 0;
+        return false;
+    }
+};
